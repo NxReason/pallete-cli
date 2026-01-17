@@ -65,11 +65,22 @@ def save_color(name: str, value: str):
             break
     if not updated:
         colors.append(new_color)
+    _write_colors(colors)
 
+def remove_color(name: str) -> bool:
+    colors = read_colors()
+    for color in colors:
+        if color.name == name:
+            colors.remove(color)
+            _write_colors(colors)
+            return True
+
+    return False
+
+def _write_colors(colors: list[Color]):
     with open('colors.txt', 'w', encoding='utf-8') as file:
         for color in colors:
             file.write(f'{color.name} {color.get_hex().upper()}\n')
-
 
 # TESTING
 import unittest
