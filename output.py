@@ -53,18 +53,6 @@ def draw_rect(color: Color, layout: RectLayout, info: list[str] | None = None):
         print('')
     layout.offset.draw_bottom()
 
-def try_print_info(index: int, info: list[str] | None = None):
-    if info is None: return
-
-    if index < len(info):
-        print(info[index], end='')
-
-def print_error_msg(msg: str, offset: Offset = no_offset):
-    offset.draw_top()
-    offset.draw_left()
-    print(f' {msg}')
-    offset.draw_bottom()
-
 def draw_line(w, r, g, b):
     fg = f'\033[38;2;{r};{g};{b}m'
     reset = '\033[0m'
@@ -72,4 +60,28 @@ def draw_line(w, r, g, b):
     line = fg + chr(9608) * w + reset
     print(line, end='')
 
+def color_names_list(colors: list[Color], offset: Offset = no_offset):
+    offset.draw_top()
+    for color in colors:
+        offset.draw_left()
+        print(f'* {color.name}')
+    offset.draw_bottom()
+
+def try_print_info(index: int, info: list[str] | None = None):
+    if info is None: return
+
+    if index < len(info):
+        print(info[index], end='')
+
+def print_success_msg(msg: str, offset: Offset = no_offset):
+    offset.draw_top()
+    offset.draw_left()
+    print(f' {msg}')
+    offset.draw_bottom()
+
+def print_error_msg(msg: str, offset: Offset = no_offset):
+    offset.draw_top()
+    offset.draw_left()
+    print(f' {msg}')
+    offset.draw_bottom()
 

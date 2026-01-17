@@ -4,6 +4,8 @@ class Command(Enum):
     GET_COLOR = 'GET_COLOR'
     PUT_COLOR = 'PUT_COLOR'
     LIST_COLORS = 'LIST_COLORS'
+    LIST_COLOR_NAMES = 'LIST_COLOR_NAMES'
+    REMOVE_COLOR = 'REMOVE_COLOR'
     ERROR = 'ERROR'
 
 
@@ -21,6 +23,11 @@ def parse_command(argv: list[str]) -> tuple[Command, dict]:
             return (Command.PUT_COLOR, { "name": argv[2], "value": argv[3] })
         case 'list' | 'l':
             return (Command.LIST_COLORS, {})
+        case 'list-names' | 'ln':
+            return (Command.LIST_COLOR_NAMES, {})
+        case 'remove' | 'r':
+            if len(argv) < 3: return (Command.ERROR, { "msg": "Specify color name to remove" })
+            return (Command.REMOVE_COLOR, { "name": argv[2] })
         case _:
             return (Command.ERROR, { "msg": f"Unknown command: {command}"})
 

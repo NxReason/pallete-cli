@@ -22,10 +22,14 @@ if __name__ == '__main__':
             name = args.get('name', None)
             value = args.get('value', None)
             if not name or not value: raise Exception('Should not be here, name/value must be checked before')
-            save_color(name, value)
+            saved_color = save_color(name, value)
+            output.print_success_msg(f'Color "{name}" saved', output.unit_offset)
         case Command.ERROR:
             error_msg = args.get('msg', 'Something went wrong...')
             output.print_error_msg(error_msg, output.unit_offset)
+        case Command.LIST_COLOR_NAMES:
+            colors = read_colors()
+            output.color_names_list(colors, output.unit_offset)
         case _:
             print('soon...')
 
