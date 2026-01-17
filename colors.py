@@ -1,3 +1,6 @@
+import os
+import sys
+
 class Color:
     def __init__(self, name: str, hex_: str = '000000', rgb: tuple[int, int, int] | None = None):
         self.name = name
@@ -38,7 +41,7 @@ def _rgb_to_hex(rgb_value: tuple[int, int, int]):
 
 def read_colors() -> list[Color]:
     result = []
-    with open('colors.txt', 'r', encoding='utf-8') as file:
+    with open(colors_path(), 'r', encoding='utf-8') as file:
         for line in file:
             name, hex_value = line.split(' ')
             hex_ = hex_value[:6]
@@ -78,10 +81,14 @@ def remove_color(name: str) -> bool:
     return False
 
 def _write_colors(colors: list[Color]):
-    with open('colors.txt', 'w', encoding='utf-8') as file:
+    with open(colors_path(), 'w', encoding='utf-8') as file:
         for color in colors:
             file.write(f'{color.name} {color.get_hex().upper()}\n')
 
+def colors_path() -> str:
+    if getattr(sys, 'frozen', False):
+        return os.path.expanduser('~/.local/share/nx-pallete/colors.txt')
+    return 'colors.txt'
 # TESTING
 import unittest
 
