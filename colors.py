@@ -54,6 +54,23 @@ def read_color(name: str) -> Color | None:
             break
     return color
 
+def save_color(name: str, value: str):
+    new_color = Color(name, value)
+    colors = read_colors()
+    updated = False
+    for i, c in enumerate(colors):
+        if c.name == name:
+            colors[i] = new_color
+            updated = True
+            break
+    if not updated:
+        colors.append(new_color)
+
+    with open('colors.txt', 'w', encoding='utf-8') as file:
+        for color in colors:
+            file.write(f'{color.name} {color.get_hex().upper()}\n')
+
+
 # TESTING
 import unittest
 

@@ -26,6 +26,7 @@ class Offset(NamedTuple):
         print(' ' * self.right, end='')
 
 no_offset = Offset(0, 0, 0, 0)
+unit_offset = Offset(1, 1, 1, 1)
 
 def colors_list(colors: list[Color]):
     for c in colors:
