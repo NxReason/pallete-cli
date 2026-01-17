@@ -45,6 +45,15 @@ def read_colors() -> list[Color]:
             result.append(Color(name, hex_))
     return result
 
+def read_color(name: str) -> Color | None:
+    colors = read_colors()
+    color = None
+    for c in colors:
+        if c.name == name:
+            color = c
+            break
+    return color
+
 # TESTING
 import unittest
 
@@ -96,6 +105,17 @@ class TestColors(unittest.TestCase):
                 ['skin', 'red', 'blue']
                 )
         self.assertEqual(colors[0].get_hex().lower(), 'bada55')
+
+    def test_get_color(self):
+        result = read_color('skin')
+        self.assertIsNotNone(result)
+        if result is None: return
+        self.assertEqual(result.name, 'skin')
+        self.assertEqual(result.get_hex().lower(), 'bada55')
+
+    def test_get_color_none(self):
+        result = read_color('non-existent-name')
+        self.assertIsNone(result)
 
 
 if __name__ == '__main__':
